@@ -1,4 +1,4 @@
-export type StepType = "user-input" | "assistant-text" | "tool-use";
+export type StepType = "user-input" | "assistant-text" | "tool-use" | "todo";
 
 export interface UserInputStep {
   type: "user-input";
@@ -17,4 +17,13 @@ export interface ToolUseStep {
   result?: string;
 }
 
-export type Step = UserInputStep | AssistantTextStep | ToolUseStep;
+export interface TodoItem {
+  text: string;
+}
+
+export interface TodoStep {
+  type: "todo";
+  items: TodoItem[];
+}
+
+export type Step = UserInputStep | AssistantTextStep | ToolUseStep | TodoStep;

@@ -8,7 +8,7 @@ export default function Home() {
   const [showCarousel, setShowCarousel] = useState(false);
 
   const handleStepComplete = useCallback((stepIndex: number) => {
-    if (stepIndex === 0) {
+    if (stepIndex === 6) {
       setShowCarousel(true);
     }
   }, []);

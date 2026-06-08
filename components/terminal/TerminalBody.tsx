@@ -5,6 +5,7 @@ import { Step } from "./types";
 import { MessageLine } from "./MessageLine";
 import { AssistantMessage } from "./AssistantMessage";
 import { ToolUseBlock } from "./ToolUseBlock";
+import { TodoBlock } from "./TodoBlock";
 import { TerminalPrompt } from "./TerminalPrompt";
 
 interface VisibleStep {
@@ -58,6 +59,9 @@ export function TerminalBody({
               result={vs.step.result}
             />
           );
+        }
+        if (vs.step.type === "todo") {
+          return <TodoBlock key={i} items={vs.step.items} />;
         }
         return null;
       })}

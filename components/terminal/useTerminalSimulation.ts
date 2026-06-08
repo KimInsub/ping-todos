@@ -55,15 +55,25 @@ export function useTerminalSimulation(
     }
   }, [onStepComplete]);
 
-  const animateTyping = useCallback(
-    (step: Step, stepIdx: number) => {
-      currentStepRef.current = stepIdx;
+  const autoAdvanceRef = useRef(false);
 
-      if (step.type === "tool-use") {
+  const advanceToStep = useCallback(
+    (idx: number) => {
+      if (idx >= script.length) return;
+      setCurrentStepIndex(idx);
+      const step = script[idx];
+      currentStepRef.current = idx;
+
+      if (step.type === "tool-use" || step.type === "todo") {
         setVisibleSteps((prev) => [...prev, { step, typingProgress: 0 }]);
         setIsAnimating(false);
         setTimeout(scrollToBottom, 50);
-        onStepComplete?.(stepIdx);
+        onStepComplete?.(idx);
+
+        // Auto-advance to next step after a short pause
+        if (autoAdvanceRef.current && idx + 1 < script.length) {
+          timerRef.current = setTimeout(() => advanceToStep(idx + 1), 400);
+        }
         return;
       }
 
@@ -78,8 +88,8 @@ export function useTerminalSimulation(
         progress++;
         setVisibleSteps((prev) => {
           const updated = [...prev];
-          const idx = updated.length - 1;
-          updated[idx] = { ...updated[idx], typingProgress: progress };
+          const last = updated.length - 1;
+          updated[last] = { ...updated[last], typingProgress: progress };
           return updated;
         });
         scrollToBottom();
@@ -89,13 +99,18 @@ export function useTerminalSimulation(
         } else {
           setIsAnimating(false);
           timerRef.current = null;
-          onStepComplete?.(stepIdx);
+          onStepComplete?.(idx);
+
+          // Auto-advance to next step after a short pause
+          if (autoAdvanceRef.current && idx + 1 < script.length) {
+            timerRef.current = setTimeout(() => advanceToStep(idx + 1), 400);
+          }
         }
       };
 
       timerRef.current = setTimeout(tick, delay);
     },
-    [scrollToBottom, onStepComplete]
+    [scrollToBottom, onStepComplete, script]
   );
 
   const advance = useCallback(() => {
@@ -107,9 +122,13 @@ export function useTerminalSimulation(
     const nextIndex = currentStepIndex + 1;
     if (nextIndex >= script.length) return;
 
-    setCurrentStepIndex(nextIndex);
-    animateTyping(script[nextIndex], nextIndex);
-  }, [isAnimating, currentStepIndex, script, skipToEnd, animateTyping]);
+    // After the first step (user-input), auto-play all remaining steps
+    if (nextIndex >= 1) {
+      autoAdvanceRef.current = true;
+    }
+
+    advanceToStep(nextIndex);
+  }, [isAnimating, currentStepIndex, script, skipToEnd, advanceToStep]);
 
   useEffect(() => {
     return () => {
