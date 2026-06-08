@@ -1,0 +1,88 @@
+@import "tailwindcss";
+
+@theme inline {
+  --color-background: #000000;
+  --color-foreground: #ffffff;
+  --font-mono: var(--font-jetbrains-mono);
+
+  /* Claude Code exact colors */
+  --color-claude-orange: rgb(215, 119, 87);
+  --color-claude-text: rgb(255, 255, 255);
+  --color-claude-inactive: rgb(153, 153, 153);
+  --color-claude-subtle: rgb(80, 80, 80);
+  --color-claude-success: rgb(78, 186, 101);
+  --color-claude-error: rgb(255, 107, 128);
+  --color-claude-user-label: rgb(122, 180, 232);
+  --color-claude-suggestion: rgb(177, 185, 249);
+  --color-claude-user-bg: rgb(55, 55, 55);
+  --color-claude-prompt-border: rgb(136, 136, 136);
+  --color-claude-diff-added: rgb(56, 166, 96);
+  --color-claude-diff-removed: rgb(179, 89, 107);
+
+  --animate-blink: blink 1s step-end infinite;
+  --animate-tool-appear: tool-appear 0.2s ease-out;
+  --animate-carousel-enter: carousel-enter 600ms ease-out;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+@keyframes tool-appear {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes carousel-enter {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes card-swipe-left {
+  to {
+    transform: translateX(-300px) rotate(-15deg);
+    opacity: 0;
+  }
+}
+
+@keyframes card-swipe-right {
+  to {
+    transform: translateX(300px) rotate(15deg);
+    opacity: 0;
+  }
+}
+
+body {
+  background: #000000;
+  color: var(--color-foreground);
+}
+
+.terminal-scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.terminal-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.terminal-scrollbar::-webkit-scrollbar-thumb {
+  background: rgb(80, 80, 80);
+  border-radius: 3px;
+}
+
+.terminal-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgb(100, 100, 100);
+}
