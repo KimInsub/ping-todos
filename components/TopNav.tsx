@@ -35,7 +35,7 @@ export function TopNav({ phase = "hidden", onClick, departing }: TopNavProps) {
             isBroken ? "text-sm" : "text-lg"
           }`}
         >
-          ping<span className="text-claude-orange">-</span>todos
+          ping<span className="text-claude-green">-</span>todos
         </a>
 
         {/* Nav Links */}
@@ -73,7 +73,7 @@ export function TopNav({ phase = "hidden", onClick, departing }: TopNavProps) {
         {/* CTA */}
         <a
           href="#get-started"
-          className={`bg-claude-orange text-white font-medium rounded-md hover:brightness-90 transition-all duration-500 ${
+          className={`bg-claude-green text-white font-medium rounded-md hover:brightness-90 transition-all duration-500 ${
             isBroken ? "text-sm px-2 py-0.5 ml-1" : "text-sm px-4 py-1.5"
           }`}
         >

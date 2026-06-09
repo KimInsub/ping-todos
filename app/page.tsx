@@ -3,6 +3,7 @@
 import { useState, useCallback, useRef } from "react";
 import { Terminal, TerminalHandle } from "@/components/terminal/Terminal";
 import { TopNav, NavPhase } from "@/components/TopNav";
+import { Hero } from "@/components/Hero";
 
 export default function Home() {
   const [phase, setPhase] = useState<NavPhase>("hidden");
@@ -48,13 +49,18 @@ export default function Home() {
         departing={feedbackActive}
       />
       <div className="min-h-screen bg-black flex items-center justify-center px-4 pt-20 pb-16">
-        <div className="max-w-2xl w-full">
-          <Terminal
-            ref={terminalRef}
-            onStepComplete={handleStepComplete}
-            pauseAfterStep={5}
-            onPausedChange={handlePausedChange}
-          />
+        <div className="w-full flex flex-col items-center">
+          <div className="max-w-3xl w-full">
+            <Hero />
+          </div>
+          <div className="max-w-2xl w-full">
+            <Terminal
+              ref={terminalRef}
+              onStepComplete={handleStepComplete}
+              pauseAfterStep={5}
+              onPausedChange={handlePausedChange}
+            />
+          </div>
         </div>
       </div>
     </>
