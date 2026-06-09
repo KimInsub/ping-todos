@@ -8,7 +8,7 @@ export function TerminalStatusBar() {
       }}
     >
       <span>~/my-project</span>
-      <span style={{ color: "rgb(215,119,87)" }}>claude-opus-4-6</span>
+      <span style={{ color: "rgb(215,119,87)" }}>demo</span>
     </div>
   );
 }
