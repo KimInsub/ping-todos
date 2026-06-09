@@ -27,7 +27,7 @@ export function Hero() {
       <div className="mt-7 flex items-center justify-center">
         <a
           href="https://pinghumans.com/sign-in"
-          className="font-mono font-medium text-sm sm:text-base px-5 py-2 rounded-md bg-claude-green text-white transition-all duration-300 hover:brightness-90"
+          className="font-mono font-medium text-sm sm:text-base px-5 py-2 rounded-md bg-claude-green/80 text-white transition-all duration-300 hover:brightness-90"
         >
           Get Started &rarr;
         </a>
