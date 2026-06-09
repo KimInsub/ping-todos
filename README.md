@@ -1,6 +1,6 @@
 # PingHumans — Real Human Verification For Your Coding Agent
 
-### AI builds. Humans verify. You ship.
+### Stop checking your AI's work.
 
 [![Website](https://img.shields.io/badge/website-pinghumans.com-black)](https://pinghumans.com)
 [![npm version](https://img.shields.io/badge/npm-pinghumans-cb3837)](https://www.npmjs.com/package/pinghumans)
