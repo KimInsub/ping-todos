@@ -10,10 +10,10 @@ export function TodoBlock({ items }: { items: TodoItem[] }) {
         {items.map((item, i) => (
           <div
             key={i}
-            className="text-sm font-mono text-neutral-400 animate-fade-in"
+            className={`text-sm font-mono animate-fade-in ${item.checked ? "text-green-400" : "text-neutral-400"}`}
             style={{ animationDelay: `${i * 150}ms`, animationFillMode: "both" }}
           >
-            ☐ {item.text}
+            {item.checked ? "☑" : "☐"} {item.text}
           </div>
         ))}
       </div>

@@ -58,10 +58,10 @@ export const SCRIPT: Step[] = [
   {
     type: "todo",
     items: [
-      { text: "Logo visible with proper spacing from edges" },
-      { text: "Nav links (Features, How it Works, Pricing) evenly spaced" },
-      { text: "CTA button aligned right with correct padding" },
-      { text: "Nav is fixed to top and doesn't overlap content" },
+      { text: "Logo visible with proper spacing from edges", checked: true },
+      { text: "Nav links (Features, How it Works, Pricing) evenly spaced", checked: true },
+      { text: "CTA button aligned right with correct padding", checked: true },
+      { text: "Nav is fixed to top and doesn't overlap content", checked: true },
     ],
   },
 ];

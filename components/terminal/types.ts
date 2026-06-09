@@ -19,6 +19,7 @@ export interface ToolUseStep {
 
 export interface TodoItem {
   text: string;
+  checked?: boolean;
 }
 
 export interface TodoStep {

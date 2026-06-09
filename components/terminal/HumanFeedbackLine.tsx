@@ -15,7 +15,7 @@ export function HumanFeedbackLine({
           className="text-xs font-bold"
           style={{ color: "rgb(78, 186, 101)" }}
         >
-          Humans
+          Pinged Humans
         </span>
       </div>
       <div
