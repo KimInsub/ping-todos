@@ -3,6 +3,7 @@
 import { RefObject } from "react";
 import { Step } from "./types";
 import { MessageLine } from "./MessageLine";
+import { HumanFeedbackLine } from "./HumanFeedbackLine";
 import { AssistantMessage } from "./AssistantMessage";
 import { ToolUseBlock } from "./ToolUseBlock";
 import { TodoBlock } from "./TodoBlock";
@@ -35,6 +36,15 @@ export function TerminalBody({
         if (vs.step.type === "user-input") {
           return (
             <MessageLine
+              key={i}
+              text={vs.step.text}
+              typingProgress={vs.typingProgress}
+            />
+          );
+        }
+        if (vs.step.type === "human-feedback") {
+          return (
+            <HumanFeedbackLine
               key={i}
               text={vs.step.text}
               typingProgress={vs.typingProgress}

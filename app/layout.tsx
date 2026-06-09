@@ -19,7 +19,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${jetbrainsMono.variable} h-full antialiased`}>
-      <body className="min-h-full flex flex-col font-mono">{children}</body>
+      <body className="min-h-full flex flex-col font-mono">
+        {children}
+      </body>
     </html>
   );
 }

@@ -1,28 +1,48 @@
 "use client";
 
-import { useState, useCallback } from "react";
-import { Terminal } from "@/components/terminal/Terminal";
-import { CarouselPreview } from "@/components/carousel/CarouselPreview";
+import { useState, useCallback, useRef } from "react";
+import { Terminal, TerminalHandle } from "@/components/terminal/Terminal";
+import { TopNav, NavPhase } from "@/components/TopNav";
 
 export default function Home() {
-  const [showCarousel, setShowCarousel] = useState(false);
+  const [phase, setPhase] = useState<NavPhase>("hidden");
+  const [waitingForNavClick, setWaitingForNavClick] = useState(false);
+  const terminalRef = useRef<TerminalHandle>(null);
 
   const handleStepComplete = useCallback((stepIndex: number) => {
-    if (stepIndex === 6) {
-      setShowCarousel(true);
+    if (stepIndex === 4) {
+      setPhase("broken");
+    } else if (stepIndex === 6) {
+      setPhase("reviewing");
+    } else if (stepIndex === 10) {
+      setPhase("fixed");
     }
   }, []);
 
+  const handlePausedChange = useCallback((paused: boolean) => {
+    setWaitingForNavClick(paused);
+  }, []);
+
+  const handleNavClick = useCallback(() => {
+    terminalRef.current?.resume();
+  }, []);
+
   return (
-    <div className="min-h-screen bg-black flex items-center justify-center px-4 py-16">
-      <div className="flex gap-8 max-w-6xl w-full items-start justify-center">
-        <div className="flex-1 max-w-2xl">
-          <Terminal onStepComplete={handleStepComplete} />
-        </div>
-        <div className="w-[340px] shrink-0 flex items-start justify-center pt-16">
-          <CarouselPreview visible={showCarousel} />
+    <>
+      <TopNav
+        phase={phase}
+        onClick={waitingForNavClick ? handleNavClick : undefined}
+      />
+      <div className="min-h-screen bg-black flex items-center justify-center px-4 pt-20 pb-16">
+        <div className="max-w-2xl w-full">
+          <Terminal
+            ref={terminalRef}
+            onStepComplete={handleStepComplete}
+            pauseAfterStep={5}
+            onPausedChange={handlePausedChange}
+          />
         </div>
       </div>
-    </div>
+    </>
   );
 }

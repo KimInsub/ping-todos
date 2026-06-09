@@ -3,46 +3,65 @@ import { Step } from "./types";
 export const SCRIPT: Step[] = [
   {
     type: "user-input",
-    text: "Build a Tinder-like swipe carousel",
+    text: "Create a TopNav for our website",
   },
   {
     type: "assistant-text",
-    text: "I'll build a swipe carousel component. Let me start by reading the project structure.",
+    text: "I'll build a TopNav. Let me check the layout.",
   },
   {
     type: "tool-use",
     tool: "Read",
-    args: "app/page.tsx",
-    result: "// Next.js app entry point (10 lines)",
-  },
-  {
-    type: "assistant-text",
-    text: "Got it — I'll create the card data, swipe component, and wire up animations.",
+    args: "app/layout.tsx",
+    result: "// RootLayout with <html>, <body>, {children} (12 lines)",
   },
   {
     type: "tool-use",
     tool: "Edit",
-    args: "components/carousel/SwipeCard.tsx",
+    args: "components/TopNav.tsx",
     result:
-      '+ import { CardData } from "./cardData"\n+ \n+ export function SwipeCard({ card, isTop, style }) {\n+   return (\n+     <div className="absolute rounded-2xl border border-[#333]"\n+       style={{ width: 280, height: 380, ...style }}>\n+       <div style={{ background: `linear-gradient(...)` }}>\n+         <span className="text-7xl">{card.emoji}</span>\n+       </div>\n+       <div className="p-5">\n+         <h3>{card.title}</h3>\n+         <p>{card.description}</p>\n+       </div>\n+     </div>\n+   )\n+ }',
+      '+ export function TopNav() {\n+   return (\n+     <nav className="fixed top-0 bg-black/80 border-b">\n+       <div className="flex items-center gap-2">\n+         <span className="font-mono">ping-todos</span>\n+         <a href="#features">Features</a>\n+         <a href="#pricing">Pricing</a>\n+         <a className="bg-orange-500 px-2 py-0.5\n+           rounded">Get Started</a>\n+       </div>\n+     </nav>\n+   )\n+ }',
   },
   {
     type: "tool-use",
     tool: "Bash",
     args: "npm run build",
-    result: "✓ Compiled successfully\n✓ Build completed in 4.2s",
+    result: "✓ Compiled successfully\n✓ Build completed in 3.8s",
   },
   {
     type: "assistant-text",
-    text: "The swipe carousel is complete — card stack with depth scaling, swipe animations, and like/dislike buttons.",
+    text: "The TopNav is live — logo, links, and CTA wired up.",
+  },
+  {
+    type: "user-input",
+    text: "/ping-humans take a look at the nav spacing",
+  },
+  {
+    type: "human-feedback",
+    text: "1. The spacing between links is too cramped\n2. Logo needs more breathing room from edges\n3. CTA button feels too close to the last link\n4. Overall nav height could use more vertical padding",
+  },
+  {
+    type: "assistant-text",
+    text: "You're right — gaps are too tight. Fixing spacing.",
+  },
+  {
+    type: "tool-use",
+    tool: "Edit",
+    args: "components/TopNav.tsx",
+    result:
+      '- <div className="flex items-center gap-2">\n+ <div className="max-w-6xl mx-auto px-4 h-14\n+   flex items-center justify-between">\n  ...\n- <div className="flex items-center gap-2">\n+ <div className="flex items-center gap-8">',
+  },
+  {
+    type: "assistant-text",
+    text: "Fixed — proper spacing with gap-8 and px-4 padding.",
   },
   {
     type: "todo",
     items: [
-      { text: "Swipe right on a card → card flies off, next card appears" },
-      { text: "Swipe left on a card → same behavior, opposite direction" },
-      { text: "Tap Like / Dislike buttons → triggers matching swipe" },
-      { text: "Reach last card → shows empty-state message" },
+      { text: "Logo visible with proper spacing from edges" },
+      { text: "Nav links (Features, How it Works, Pricing) evenly spaced" },
+      { text: "CTA button aligned right with correct padding" },
+      { text: "Nav is fixed to top and doesn't overlap content" },
     ],
   },
 ];

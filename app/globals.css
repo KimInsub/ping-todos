@@ -63,18 +63,56 @@
   }
 }
 
-@keyframes card-swipe-left {
-  to {
-    transform: translateX(-300px) rotate(-15deg);
+/* Cursor swarm animations */
+@keyframes cursor-enter {
+  from {
     opacity: 0;
+    transform: scale(0.5);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
   }
 }
 
-@keyframes card-swipe-right {
-  to {
-    transform: translateX(300px) rotate(15deg);
-    opacity: 0;
-  }
+@keyframes cursor-path-0 {
+  0% { top: 8px; left: 15%; }
+  25% { top: 24px; left: 45%; }
+  50% { top: 6px; left: 65%; }
+  75% { top: 28px; left: 35%; }
+  100% { top: 12px; left: 55%; }
+}
+
+@keyframes cursor-path-1 {
+  0% { top: 4px; left: 70%; }
+  25% { top: 20px; left: 30%; }
+  50% { top: 10px; left: 50%; }
+  75% { top: 26px; left: 60%; }
+  100% { top: 6px; left: 40%; }
+}
+
+@keyframes cursor-path-2 {
+  0% { top: 28px; left: 35%; }
+  25% { top: 8px; left: 55%; }
+  50% { top: 22px; left: 20%; }
+  75% { top: 12px; left: 75%; }
+  100% { top: 18px; left: 45%; }
+}
+
+@keyframes cursor-path-3 {
+  0% { top: 16px; left: 80%; }
+  25% { top: 6px; left: 25%; }
+  50% { top: 20px; left: 55%; }
+  75% { top: 4px; left: 45%; }
+  100% { top: 14px; left: 30%; }
+}
+
+@keyframes cursor-path-4 {
+  0% { top: 12px; left: 50%; }
+  25% { top: 26px; left: 70%; }
+  50% { top: 8px; left: 35%; }
+  75% { top: 20px; left: 15%; }
+  100% { top: 10px; left: 60%; }
 }
 
 body {

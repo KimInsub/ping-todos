@@ -10,11 +10,13 @@ interface VisibleStep {
 
 export function useTerminalSimulation(
   script: Step[],
-  onStepComplete?: (stepIndex: number) => void
+  onStepComplete?: (stepIndex: number) => void,
+  pauseAfterStep?: number
 ) {
   const [visibleSteps, setVisibleSteps] = useState<VisibleStep[]>([]);
   const [currentStepIndex, setCurrentStepIndex] = useState(-1);
   const [isAnimating, setIsAnimating] = useState(false);
+  const [paused, setPaused] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const currentStepRef = useRef(-1);
@@ -44,7 +46,9 @@ export function useTerminalSimulation(
             ? last.step.text.length
             : last.step.type === "assistant-text"
               ? last.step.text.length
-              : 0;
+              : last.step.type === "human-feedback"
+                ? last.step.text.length
+                : 0;
         updated[updated.length - 1] = { ...last, typingProgress: fullLength };
       }
       return updated;
@@ -72,7 +76,11 @@ export function useTerminalSimulation(
 
         // Auto-advance to next step after a short pause
         if (autoAdvanceRef.current && idx + 1 < script.length) {
-          timerRef.current = setTimeout(() => advanceToStep(idx + 1), 400);
+          if (pauseAfterStep !== undefined && idx >= pauseAfterStep) {
+            setPaused(true);
+          } else {
+            timerRef.current = setTimeout(() => advanceToStep(idx + 1), 400);
+          }
         }
         return;
       }
@@ -103,15 +111,28 @@ export function useTerminalSimulation(
 
           // Auto-advance to next step after a short pause
           if (autoAdvanceRef.current && idx + 1 < script.length) {
-            timerRef.current = setTimeout(() => advanceToStep(idx + 1), 400);
+            if (pauseAfterStep !== undefined && idx >= pauseAfterStep) {
+              setPaused(true);
+            } else {
+              timerRef.current = setTimeout(() => advanceToStep(idx + 1), 400);
+            }
           }
         }
       };
 
       timerRef.current = setTimeout(tick, delay);
     },
-    [scrollToBottom, onStepComplete, script]
+    [scrollToBottom, onStepComplete, script, pauseAfterStep]
   );
+
+  const resume = useCallback(() => {
+    if (!paused) return;
+    setPaused(false);
+    const nextIdx = currentStepRef.current + 1;
+    if (nextIdx < script.length) {
+      timerRef.current = setTimeout(() => advanceToStep(nextIdx), 400);
+    }
+  }, [paused, script, advanceToStep]);
 
   const advance = useCallback(() => {
     if (isAnimating) {
@@ -140,7 +161,9 @@ export function useTerminalSimulation(
     visibleSteps,
     isAnimating,
     isComplete,
+    paused,
     advance,
+    resume,
     containerRef,
   };
 }
