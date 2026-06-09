@@ -2,23 +2,25 @@
 
 ### AI builds. Humans verify. You ship.
 
-Your coding agent ships features in minutes — but every output still lands on your desk to check. **PingHumans** hands that verification off to real humans, right inside your agent's workflow. You stay out of the loop until it actually matters.
+Your coding agent ships features in minutes — but every output still lands on *your* desk to check. **PingHumans** hands that verification off to real humans, right inside your agent's workflow. You stay out of the loop until it actually matters.
 
 ---
 
-## The problem
+## The bottleneck isn't the AI anymore — it's you
 
 Coding agents are fast. They read your layout, write the component, run the build, and report back "done" — all before you've finished your coffee.
 
-But "done" isn't shippable. Spacing is off. Copy reads wrong. The edge case wasn't handled. So you stop what you're doing, open the diff, eyeball the result, and write up feedback. Every. Single. Time.
+But "done" isn't shippable. Spacing is off. Copy reads wrong. The edge case wasn't handled. So you stop what you're doing, open the diff, eyeball the result, and write up feedback. **Every. Single. Time.**
 
-You've become your agent's QA team. The bottleneck isn't the AI anymore — it's you.
+You've become your agent's QA team. The faster your agent gets, the more it piles on you.
 
-## How it works
+## PingHumans takes you out of the loop
 
-PingHumans adds a `/ping-humans` command to your agent's workflow. When the agent finishes a task, instead of waiting on you, it pings a real human to verify the work and send back structured feedback. The agent acts on it and keeps moving.
+PingHumans puts a network of real humans inside your agent's workflow. When the agent finishes a task, instead of pinging *you*, it pings a **human verifier** to look at the work and send back structured, actionable feedback. The agent reads it, fixes the issues, and keeps moving — no context-switch, no waiting on you.
 
-A typical loop:
+You only step in when something genuinely needs your call. Everything else gets verified and shipped without you.
+
+## See it in action
 
 ```
 > Create a TopNav for our website
@@ -50,52 +52,33 @@ A typical loop:
   ✓ Nav fixed to top and doesn't overlap content
 ```
 
-The human verifies, the agent fixes, and the work ships — without you sitting in the middle of every iteration.
+A human verified, the agent fixed it, and the work shipped — and you never had to look at the diff.
 
-## Why it matters
+## Why teams use it
 
-- **You stop being the bottleneck.** Hand off verification instead of doing it yourself.
-- **Real eyes, not vibes.** Humans catch the spacing, the tone, the "this feels off" that automated checks miss.
-- **Your workflow keeps moving.** The agent gets feedback and acts on it without waiting for you to context-switch.
+- **You stop being the bottleneck.** Hand off verification instead of doing it yourself, every time.
+- **Real eyes, not vibes.** Humans catch the spacing, the tone, the "this feels off" that automated checks and self-grading agents miss.
+- **Your flow never stalls.** The agent gets feedback the moment it needs it and acts on it immediately — no waiting for you to context-switch back.
+- **One command.** Drop `/ping-humans` into your agent's workflow and it just works.
 
-## This repo
+## How it works
 
-This is an interactive demo of the PingHumans flow — a terminal simulator built with Next.js that walks through a coding agent receiving and acting on human feedback in real time.
+1. Your coding agent finishes a task.
+2. It runs `/ping-humans` with whatever it wants checked.
+3. A real human verifies the work and sends back structured feedback in seconds.
+4. The agent acts on the feedback and ships.
 
-**Tech stack**
+---
 
-- [Next.js 16](https://nextjs.org) (App Router)
-- [React 19](https://react.dev)
-- [Tailwind CSS 4](https://tailwindcss.com)
-- TypeScript
+## About this repo
 
-**Project layout**
+This is an interactive demo of the PingHumans flow — a terminal simulator that walks through a coding agent receiving and acting on human feedback in real time.
 
-```
-app/                       Next.js app router (layout, page, styles)
-components/
-  TopNav.tsx               The nav built in the demo
-  CursorSwarm.tsx          Background cursor animation
-  terminal/                Terminal simulator
-    script.ts              The scripted demo flow
-    useTerminalSimulation.ts
-    Terminal*.tsx          Header, body, prompt, status bar
-    *Line.tsx              Message / feedback line renderers
-```
-
-## Getting started
+Run it locally:
 
 ```bash
 npm install
-npm run dev
+npm run dev      # open http://localhost:3000
 ```
 
-Open [http://localhost:3000](http://localhost:3000) to watch the demo.
-
-**Other commands**
-
-```bash
-npm run build    # production build
-npm run start    # serve the production build
-npm run lint     # run eslint
-```
+Built with [Next.js 16](https://nextjs.org), [React 19](https://react.dev), [Tailwind CSS 4](https://tailwindcss.com), and TypeScript.
