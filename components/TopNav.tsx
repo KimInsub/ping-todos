@@ -7,9 +7,10 @@ export type NavPhase = "hidden" | "broken" | "reviewing" | "fixed";
 interface TopNavProps {
   phase?: NavPhase;
   onClick?: () => void;
+  departing?: boolean;
 }
 
-export function TopNav({ phase = "hidden", onClick }: TopNavProps) {
+export function TopNav({ phase = "hidden", onClick, departing }: TopNavProps) {
   const isBroken = phase === "broken" || phase === "reviewing";
   const isReviewing = phase === "reviewing";
 
@@ -81,7 +82,7 @@ export function TopNav({ phase = "hidden", onClick }: TopNavProps) {
       </div>
 
       {/* Cursor swarm overlay */}
-      <CursorSwarm visible={isReviewing} />
+      <CursorSwarm visible={isReviewing} departing={departing} />
     </nav>
   );
 }

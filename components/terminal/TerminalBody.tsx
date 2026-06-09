@@ -7,6 +7,7 @@ import { HumanFeedbackLine } from "./HumanFeedbackLine";
 import { AssistantMessage } from "./AssistantMessage";
 import { ToolUseBlock } from "./ToolUseBlock";
 import { TodoBlock } from "./TodoBlock";
+import { ReceivingFeedbackLine } from "./ReceivingFeedbackLine";
 import { TerminalPrompt } from "./TerminalPrompt";
 
 interface VisibleStep {
@@ -30,7 +31,7 @@ export function TerminalBody({
   return (
     <div
       ref={containerRef}
-      className="px-4 pb-4 space-y-3 overflow-y-auto min-h-[200px] max-h-[400px] terminal-scrollbar"
+      className="px-4 pb-4 space-y-3 overflow-y-auto h-[400px] terminal-scrollbar"
     >
       {visibleSteps.map((vs, i) => {
         if (vs.step.type === "user-input") {
@@ -69,6 +70,9 @@ export function TerminalBody({
               result={vs.step.result}
             />
           );
+        }
+        if (vs.step.type === "receiving-feedback") {
+          return <ReceivingFeedbackLine key={i} />;
         }
         if (vs.step.type === "todo") {
           return <TodoBlock key={i} items={vs.step.items} />;

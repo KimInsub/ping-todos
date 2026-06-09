@@ -1,4 +1,4 @@
-export type StepType = "user-input" | "assistant-text" | "tool-use" | "todo" | "human-feedback";
+export type StepType = "user-input" | "assistant-text" | "tool-use" | "todo" | "receiving-feedback" | "human-feedback";
 
 export interface UserInputStep {
   type: "user-input";
@@ -27,9 +27,13 @@ export interface TodoStep {
   items: TodoItem[];
 }
 
+export interface ReceivingFeedbackStep {
+  type: "receiving-feedback";
+}
+
 export interface HumanFeedbackStep {
   type: "human-feedback";
   text: string;
 }
 
-export type Step = UserInputStep | AssistantTextStep | ToolUseStep | TodoStep | HumanFeedbackStep;
+export type Step = UserInputStep | AssistantTextStep | ToolUseStep | TodoStep | ReceivingFeedbackStep | HumanFeedbackStep;

@@ -23,30 +23,40 @@ function CursorIcon({ color }: { color: string }) {
 
 interface CursorSwarmProps {
   visible: boolean;
+  departing?: boolean;
 }
 
-export function CursorSwarm({ visible }: CursorSwarmProps) {
+export function CursorSwarm({ visible, departing }: CursorSwarmProps) {
   if (!visible) return null;
 
   return (
-    <div className="absolute inset-0 pointer-events-none overflow-hidden z-10">
-      {CURSORS.map((cursor, i) => (
-        <div
-          key={cursor.name}
-          className="absolute"
-          style={{
-            animation: `cursor-enter 400ms ease-out ${cursor.delay}ms both, cursor-path-${i} 6s ease-in-out ${cursor.delay + 400}ms infinite alternate`,
-          }}
-        >
-          <CursorIcon color={cursor.color} />
-          <span
-            className="absolute left-4 top-3 text-[10px] font-medium px-1.5 py-0.5 rounded whitespace-nowrap"
-            style={{ backgroundColor: cursor.color, color: "#000" }}
+    <div className="absolute inset-0 pointer-events-none overflow-visible z-10">
+      {CURSORS.map((cursor, i) => {
+        const departDelay = i * 400;
+        const style: React.CSSProperties = departing
+          ? {
+              animation: `cursor-enter 400ms ease-out ${cursor.delay}ms both, cursor-path-${i} 6s ease-in-out ${cursor.delay + 400}ms infinite alternate, cursor-depart 900ms ease-in ${departDelay}ms forwards`,
+            }
+          : {
+              animation: `cursor-enter 400ms ease-out ${cursor.delay}ms both, cursor-path-${i} 6s ease-in-out ${cursor.delay + 400}ms infinite alternate`,
+            };
+
+        return (
+          <div
+            key={cursor.name}
+            className="absolute"
+            style={style}
           >
-            {cursor.name}
-          </span>
-        </div>
-      ))}
+            <CursorIcon color={cursor.color} />
+            <span
+              className="absolute left-4 top-3 text-[10px] font-medium px-1.5 py-0.5 rounded whitespace-nowrap"
+              style={{ backgroundColor: cursor.color, color: "#000" }}
+            >
+              {cursor.name}
+            </span>
+          </div>
+        );
+      })}
     </div>
   );
 }

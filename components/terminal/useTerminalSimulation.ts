@@ -68,7 +68,7 @@ export function useTerminalSimulation(
       const step = script[idx];
       currentStepRef.current = idx;
 
-      if (step.type === "tool-use" || step.type === "todo") {
+      if (step.type === "tool-use" || step.type === "todo" || step.type === "receiving-feedback") {
         setVisibleSteps((prev) => [...prev, { step, typingProgress: 0 }]);
         setIsAnimating(false);
         setTimeout(scrollToBottom, 50);

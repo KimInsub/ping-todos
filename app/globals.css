@@ -115,6 +115,13 @@
   100% { top: 10px; left: 60%; }
 }
 
+/* Cursor departure animation (nav → feedback area) */
+@keyframes cursor-depart {
+  0% { opacity: 1; transform: translateY(0) scale(1); }
+  70% { opacity: 0.6; }
+  100% { opacity: 0; transform: translateY(60vh) scale(0.6); }
+}
+
 body {
   background: #000000;
   color: var(--color-foreground);

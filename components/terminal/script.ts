@@ -37,6 +37,9 @@ export const SCRIPT: Step[] = [
     text: "/ping-humans take a look at the nav spacing",
   },
   {
+    type: "receiving-feedback",
+  },
+  {
     type: "human-feedback",
     text: "1. The spacing between links is too cramped\n2. Logo needs more breathing room from edges\n3. CTA button feels too close to the last link\n4. Overall nav height could use more vertical padding",
   },
