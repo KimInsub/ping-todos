@@ -49,6 +49,18 @@ export default function Home() {
       />
       <div className="min-h-screen bg-black flex items-center justify-center px-4 pt-20 pb-16">
         <div className="max-w-2xl w-full">
+          <div className="mb-10 text-center">
+            <h1 className="font-mono font-bold tracking-tight text-3xl sm:text-4xl text-white">
+              AI builds. <span className="text-claude-orange">PingHumans verify.</span> You ship.
+            </h1>
+            <p className="mt-5 font-mono text-sm sm:text-base leading-relaxed text-claude-inactive">
+              Your coding agent ships features in minutes — but every output still
+              needs you to review it.{" "}
+              <span className="font-semibold text-white">PingHumans </span> hands that
+              verification off to <span className="font-semibold text-white">real humans</span>, right inside your agent&rsquo;s
+              workflow. You stay out of the loop.
+            </p>
+          </div>
           <Terminal
             ref={terminalRef}
             onStepComplete={handleStepComplete}

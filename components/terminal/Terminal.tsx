@@ -50,7 +50,7 @@ export const Terminal = forwardRef<TerminalHandle, TerminalProps>(
 
     return (
       <div
-        className="w-full overflow-hidden cursor-pointer select-none font-mono"
+        className="w-full overflow-hidden cursor-pointer select-none font-mono border border-claude-subtle rounded-lg"
         style={{ backgroundColor: "#000000" }}
         onClick={advance}
         role="button"
