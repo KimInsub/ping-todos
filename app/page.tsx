@@ -4,6 +4,7 @@ import { useState, useCallback, useRef } from "react";
 import { Terminal, TerminalHandle } from "@/components/terminal/Terminal";
 import { TopNav, NavPhase } from "@/components/TopNav";
 import { Hero } from "@/components/Hero";
+import { InstallCommand } from "@/components/InstallCommand";
 
 export default function Home() {
   const [phase, setPhase] = useState<NavPhase>("hidden");
@@ -54,6 +55,12 @@ export default function Home() {
             <Hero />
           </div>
           <div className="max-w-2xl w-full">
+            <InstallCommand />
+          </div>
+          <div className="max-w-2xl w-full">
+            <h2 className="text-center text-lg font-semibold text-white mt-40 mb-6">
+              See it in action
+            </h2>
             <Terminal
               ref={terminalRef}
               onStepComplete={handleStepComplete}
