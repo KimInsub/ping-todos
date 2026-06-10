@@ -15,7 +15,7 @@ export function InstallCommand() {
   }, []);
 
   return (
-    <div className="mt-12 text-center">
+    <div id="get-started" className="mt-12 text-center scroll-mt-28">
       <h2 className="text-center text-lg font-semibold text-white mb-6">
         Install with one command
       </h2>
