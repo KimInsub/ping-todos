@@ -19,9 +19,11 @@ export default function Home() {
       setPhase("broken");
     } else if (stepIndex === 6) {
       setPhase("reviewing");
-    } else if (stepIndex === 7) {
+    } else if (stepIndex === 8) {
       setTimeout(() => setFeedbackActive(true), 400);
-    } else if (stepIndex === 10) {
+    } else if (stepIndex === 11) {
+      setPhase("fixing");
+    } else if (stepIndex === 12) {
       setPhase("fixed");
     }
   }, []);
@@ -64,8 +66,9 @@ export default function Home() {
             <Terminal
               ref={terminalRef}
               onStepComplete={handleStepComplete}
-              pauseAfterStep={5}
+              pauseAtSteps={[5, 7]}
               onPausedChange={handlePausedChange}
+              pingingDone={feedbackActive}
             />
           </div>
         </div>

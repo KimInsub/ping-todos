@@ -1,11 +1,11 @@
 "use client";
 
 const CURSORS = [
-  { name: "Sarah D.", color: "#E879F9", delay: 0 },
-  { name: "Mike T.", color: "#60A5FA", delay: 600 },
-  { name: "Jess L.", color: "#34D399", delay: 1200 },
-  { name: "Ryan K.", color: "#FBBF24", delay: 1800 },
-  { name: "Ana M.", color: "#F87171", delay: 2400 },
+  { name: "Sarah D.", color: "#E879F9", delay: 300 },
+  { name: "Mike T.", color: "#60A5FA", delay: 900 },
+  { name: "Jess L.", color: "#34D399", delay: 1500 },
+  { name: "Ryan K.", color: "#FBBF24", delay: 2100 },
+  { name: "Ana M.", color: "#F87171", delay: 2700 },
 ];
 
 function CursorIcon({ color }: { color: string }) {

@@ -31,9 +31,25 @@ export interface ReceivingFeedbackStep {
   type: "receiving-feedback";
 }
 
-export interface HumanFeedbackStep {
-  type: "human-feedback";
-  text: string;
+export interface PingingHumansStep {
+  type: "pinging-humans";
+  workers: { name: string; color: string }[];
 }
 
-export type Step = UserInputStep | AssistantTextStep | ToolUseStep | TodoStep | ReceivingFeedbackStep | HumanFeedbackStep;
+export interface HumanFeedbackStep {
+  type: "human-feedback";
+  items: string[];
+}
+
+export type Step = (
+  | UserInputStep
+  | AssistantTextStep
+  | ToolUseStep
+  | TodoStep
+  | ReceivingFeedbackStep
+  | PingingHumansStep
+  | HumanFeedbackStep
+) & {
+  /** ms to hold after this step before auto-advancing (default 400) */
+  holdAfter?: number;
+};

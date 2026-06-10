@@ -2,7 +2,7 @@
 
 import { CursorSwarm } from "./CursorSwarm";
 
-export type NavPhase = "hidden" | "broken" | "reviewing" | "fixed";
+export type NavPhase = "hidden" | "broken" | "reviewing" | "fixing" | "fixed";
 
 interface TopNavProps {
   phase?: NavPhase;
@@ -11,8 +11,9 @@ interface TopNavProps {
 }
 
 export function TopNav({ phase = "hidden", onClick, departing }: TopNavProps) {
-  const isBroken = phase === "broken" || phase === "reviewing";
+  const isBroken = phase === "broken" || phase === "reviewing" || phase === "fixing";
   const isReviewing = phase === "reviewing";
+  const isFixing = phase === "fixing";
 
   const handleClick = onClick
     ? (e: React.MouseEvent) => {
@@ -22,7 +23,7 @@ export function TopNav({ phase = "hidden", onClick, departing }: TopNavProps) {
     : undefined;
 
   return (
-    <nav className={`fixed top-0 left-0 right-0 z-50 bg-black/80 backdrop-blur border-b border-claude-subtle/30 transition-all duration-500 ${phase === "hidden" ? "opacity-0 -translate-y-full" : "opacity-100 translate-y-0"} ${onClick ? "cursor-pointer" : ""}`} onClick={handleClick}>
+    <nav className={`fixed top-0 left-0 right-0 z-50 bg-black/80 backdrop-blur border-b border-claude-subtle/30 transition-all duration-500 ${phase === "hidden" ? "opacity-0 -translate-y-full" : "opacity-100 translate-y-0"} ${isFixing ? "animate-pulse ring-2 ring-inset ring-claude-green/70" : ""} ${onClick ? "cursor-pointer" : ""}`} onClick={handleClick}>
       <div
         className={`max-w-6xl mx-auto flex items-center justify-between transition-all duration-500 ${
           isBroken ? "px-1 h-9" : "px-4 h-14"

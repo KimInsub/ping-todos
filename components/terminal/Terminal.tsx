@@ -9,8 +9,9 @@ import { useTerminalSimulation } from "./useTerminalSimulation";
 
 interface TerminalProps {
   onStepComplete?: (stepIndex: number) => void;
-  pauseAfterStep?: number;
+  pauseAtSteps?: number[];
   onPausedChange?: (paused: boolean) => void;
+  pingingDone?: boolean;
 }
 
 export interface TerminalHandle {
@@ -18,16 +19,15 @@ export interface TerminalHandle {
 }
 
 export const Terminal = forwardRef<TerminalHandle, TerminalProps>(
-  function Terminal({ onStepComplete, pauseAfterStep, onPausedChange }, ref) {
+  function Terminal({ onStepComplete, pauseAtSteps, onPausedChange, pingingDone }, ref) {
     const {
       visibleSteps,
       isAnimating,
-      isComplete,
       paused,
       advance,
       resume,
       containerRef,
-    } = useTerminalSimulation(SCRIPT, onStepComplete, pauseAfterStep);
+    } = useTerminalSimulation(SCRIPT, onStepComplete, pauseAtSteps);
 
     useImperativeHandle(ref, () => ({ resume }), [resume]);
 
@@ -61,8 +61,9 @@ export const Terminal = forwardRef<TerminalHandle, TerminalProps>(
         <TerminalBody
           visibleSteps={visibleSteps}
           isAnimating={isAnimating}
-          isComplete={isComplete}
           showHint={showHint}
+          paused={paused}
+          pingingDone={pingingDone}
           containerRef={containerRef}
         />
         <TerminalStatusBar />
