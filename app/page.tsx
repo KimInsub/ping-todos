@@ -10,18 +10,15 @@ export default function Home() {
   const [phase, setPhase] = useState<NavPhase>("hidden");
   const [waitingForNavClick, setWaitingForNavClick] = useState(false);
   const [feedbackActive, setFeedbackActive] = useState(false);
-  const [currentStep, setCurrentStep] = useState(-1);
   const terminalRef = useRef<TerminalHandle>(null);
 
   const resetDemoState = useCallback(() => {
     setPhase("hidden");
     setWaitingForNavClick(false);
     setFeedbackActive(false);
-    setCurrentStep(-1);
   }, []);
 
   const handleStepComplete = useCallback((stepIndex: number) => {
-    setCurrentStep(stepIndex);
     if (stepIndex === 4) {
       setPhase("broken");
     } else if (stepIndex === 6) {
@@ -45,14 +42,6 @@ export default function Home() {
 
   return (
     <>
-      <div style={{
-        position: "fixed", top: 8, right: 8, zIndex: 9999,
-        background: "rgba(255,0,0,0.8)", color: "white",
-        padding: "4px 10px", borderRadius: 4, fontFamily: "monospace",
-        fontSize: 14, pointerEvents: "none"
-      }}>
-        Step: {currentStep}
-      </div>
       <TopNav
         phase={phase}
         onClick={waitingForNavClick ? handleNavClick : undefined}
