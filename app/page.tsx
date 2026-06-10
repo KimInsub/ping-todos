@@ -49,7 +49,7 @@ export default function Home() {
         onClick={waitingForNavClick ? handleNavClick : undefined}
         departing={feedbackActive}
       />
-      <div className="min-h-screen bg-black flex items-center justify-center px-4 pt-20 pb-16">
+      <div className="min-h-screen bg-black flex items-center justify-center px-4 pt-20 md:pt-44  pb-16">
         <div className="w-full flex flex-col items-center">
           <div className="max-w-3xl w-full">
             <Hero />

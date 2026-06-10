@@ -2,7 +2,7 @@ export function Hero() {
   return (
     <div className="mb-10 text-center">
       <h1 aria-label="PingHumans" className="mb-8">
-        <pre className="inline-block text-left font-mono text-claude-green leading-none text-[0.4rem] xs:text-[0.5rem] sm:text-xs md:text-sm overflow-x-auto">
+        <pre className="inline-block text-left font-mono text-claude-green leading-none text-[0.4rem] xs:text-[0.5rem] sm:text-xs md:text-sm overflow-x-auto hero-bounce-in">
 {` ____  _             _   _
 |  _ \\(_)_ __   __ _| | | |_   _ _ __ ___   __ _ _ __  ___
 | |_) | | '_ \\ / _\` | |_| | | | | '_ \` _ \\ / _\` | '_ \\/ __|
@@ -12,9 +12,9 @@ export function Hero() {
         </pre>
       </h1>
       <p className="font-mono font-bold tracking-tight text-3xl sm:text-4xl text-white">
-        <span className="text-claude-green">Stop checking </span> your AI&rsquo;s work.
+        <span className="text-claude-green">Stop reviewing </span> what your agent ships.
       </p>
-      <p className="mt-4 font-mono text-base sm:text-lg text-claude-green/90">
+      <p className="mt-4 font-mono text-base sm:text-lg text-claude-green/70">
         Verification on autopilot, powered by real humans.
       </p>
       <p className="mt-5 font-mono text-sm sm:text-base leading-relaxed text-claude-inactive">
