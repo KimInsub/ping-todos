@@ -1,5 +1,13 @@
 import { Step } from "./types";
 
+const WORKERS = [
+  { name: "Sarah D.", color: "#E879F9" },
+  { name: "Mike T.", color: "#60A5FA" },
+  { name: "Jess L.", color: "#34D399" },
+  { name: "Ryan K.", color: "#FBBF24" },
+  { name: "Ana M.", color: "#F87171" },
+];
+
 export const SCRIPT: Step[] = [
   {
     type: "user-input",
@@ -37,15 +45,25 @@ export const SCRIPT: Step[] = [
     text: "/ping-humans take a look at the nav spacing",
   },
   {
+    type: "pinging-humans",
+    workers: WORKERS,
+  },
+  {
     type: "receiving-feedback",
   },
   {
     type: "human-feedback",
-    text: "1. The spacing between links is too cramped\n2. Logo needs more breathing room from edges\n3. CTA button feels too close to the last link\n4. Overall nav height could use more vertical padding",
+    items: [
+      "1. The spacing between links is too cramped",
+      "2. Logo needs more breathing room from edges",
+      "3. CTA button feels too close to the last link",
+      "4. Overall nav height could use more vertical padding",
+    ],
   },
   {
     type: "assistant-text",
-    text: "You're right — gaps are too tight. Fixing spacing.",
+    text: "Points 1–3 share one root cause: the container has no horizontal padding and gap-2 is too tight. Fixing the real issue.",
+    holdAfter: 1000,
   },
   {
     type: "tool-use",
@@ -53,18 +71,10 @@ export const SCRIPT: Step[] = [
     args: "components/TopNav.tsx",
     result:
       '- <div className="flex items-center gap-2">\n+ <div className="max-w-6xl mx-auto px-4 h-14\n+   flex items-center justify-between">\n  ...\n- <div className="flex items-center gap-2">\n+ <div className="flex items-center gap-8">',
+    holdAfter: 1800,
   },
   {
     type: "assistant-text",
     text: "Fixed — proper spacing with gap-8 and px-4 padding.",
-  },
-  {
-    type: "todo",
-    items: [
-      { text: "Logo visible with proper spacing from edges", checked: true },
-      { text: "Nav links (Features, How it Works, Pricing) evenly spaced", checked: true },
-      { text: "CTA button aligned right with correct padding", checked: true },
-      { text: "Nav is fixed to top and doesn't overlap content", checked: true },
-    ],
   },
 ];

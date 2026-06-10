@@ -4,11 +4,13 @@ import { RefObject } from "react";
 import { Step } from "./types";
 import { MessageLine } from "./MessageLine";
 import { HumanFeedbackLine } from "./HumanFeedbackLine";
+import { PingingHumansLine } from "./PingingHumansLine";
 import { AssistantMessage } from "./AssistantMessage";
 import { ToolUseBlock } from "./ToolUseBlock";
 import { TodoBlock } from "./TodoBlock";
 import { ReceivingFeedbackLine } from "./ReceivingFeedbackLine";
 import { TerminalPrompt } from "./TerminalPrompt";
+import { AdvanceButton } from "./AdvanceButton";
 
 interface VisibleStep {
   step: Step;
@@ -18,16 +20,29 @@ interface VisibleStep {
 export function TerminalBody({
   visibleSteps,
   isAnimating,
-  isComplete,
   showHint,
+  paused,
+  pingingDone,
   containerRef,
 }: {
   visibleSteps: VisibleStep[];
   isAnimating: boolean;
-  isComplete: boolean;
   showHint: boolean;
+  paused: boolean;
+  pingingDone?: boolean;
   containerRef: RefObject<HTMLDivElement | null>;
 }) {
+  if (showHint) {
+    return (
+      <div
+        ref={containerRef}
+        className="flex items-center justify-center h-[400px]"
+      >
+        <AdvanceButton />
+      </div>
+    );
+  }
+
   return (
     <div
       ref={containerRef}
@@ -44,11 +59,15 @@ export function TerminalBody({
           );
         }
         if (vs.step.type === "human-feedback") {
+          return <HumanFeedbackLine key={i} items={vs.step.items} />;
+        }
+        if (vs.step.type === "pinging-humans") {
           return (
-            <HumanFeedbackLine
+            <PingingHumansLine
               key={i}
-              text={vs.step.text}
+              workers={vs.step.workers}
               typingProgress={vs.typingProgress}
+              done={pingingDone}
             />
           );
         }
@@ -72,14 +91,19 @@ export function TerminalBody({
           );
         }
         if (vs.step.type === "receiving-feedback") {
-          return <ReceivingFeedbackLine key={i} />;
+          return (
+            <ReceivingFeedbackLine
+              key={i}
+              done={visibleSteps.some((s) => s.step.type === "human-feedback")}
+            />
+          );
         }
         if (vs.step.type === "todo") {
           return <TodoBlock key={i} items={vs.step.items} />;
         }
         return null;
       })}
-      {!isAnimating && <TerminalPrompt showHint={showHint && !isComplete} />}
+      {!isAnimating && paused && <TerminalPrompt showHint />}
     </div>
   );
 }
