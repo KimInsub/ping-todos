@@ -2,15 +2,18 @@
 
 import { useEffect, useImperativeHandle, forwardRef } from "react";
 import { SCRIPT } from "./script";
+import { Step } from "./types";
 import { TerminalHeader } from "./TerminalHeader";
 import { TerminalBody } from "./TerminalBody";
 import { TerminalStatusBar } from "./TerminalStatusBar";
 import { useTerminalSimulation } from "./useTerminalSimulation";
 
 interface TerminalProps {
+  script?: Step[];
   onStepComplete?: (stepIndex: number) => void;
   pauseAtSteps?: number[];
   onPausedChange?: (paused: boolean) => void;
+  onReset?: () => void;
   pingingDone?: boolean;
 }
 
@@ -19,15 +22,16 @@ export interface TerminalHandle {
 }
 
 export const Terminal = forwardRef<TerminalHandle, TerminalProps>(
-  function Terminal({ onStepComplete, pauseAtSteps, onPausedChange, pingingDone }, ref) {
+  function Terminal({ script = SCRIPT, onStepComplete, pauseAtSteps, onPausedChange, onReset, pingingDone }, ref) {
     const {
       visibleSteps,
       isAnimating,
+      isComplete,
       paused,
       advance,
       resume,
       containerRef,
-    } = useTerminalSimulation(SCRIPT, onStepComplete, pauseAtSteps);
+    } = useTerminalSimulation(script, onStepComplete, pauseAtSteps, onReset);
 
     useImperativeHandle(ref, () => ({ resume }), [resume]);
 
@@ -61,6 +65,7 @@ export const Terminal = forwardRef<TerminalHandle, TerminalProps>(
         <TerminalBody
           visibleSteps={visibleSteps}
           isAnimating={isAnimating}
+          isComplete={isComplete}
           showHint={showHint}
           paused={paused}
           pingingDone={pingingDone}

@@ -9,6 +9,7 @@ import { AssistantMessage } from "./AssistantMessage";
 import { ToolUseBlock } from "./ToolUseBlock";
 import { TodoBlock } from "./TodoBlock";
 import { ReceivingFeedbackLine } from "./ReceivingFeedbackLine";
+import { CheckLine } from "./CheckLine";
 import { TerminalPrompt } from "./TerminalPrompt";
 import { AdvanceButton } from "./AdvanceButton";
 
@@ -20,6 +21,7 @@ interface VisibleStep {
 export function TerminalBody({
   visibleSteps,
   isAnimating,
+  isComplete,
   showHint,
   paused,
   pingingDone,
@@ -27,6 +29,7 @@ export function TerminalBody({
 }: {
   visibleSteps: VisibleStep[];
   isAnimating: boolean;
+  isComplete: boolean;
   showHint: boolean;
   paused: boolean;
   pingingDone?: boolean;
@@ -98,12 +101,20 @@ export function TerminalBody({
             />
           );
         }
+        if (vs.step.type === "check-line") {
+          return <CheckLine key={i} text={vs.step.text} />;
+        }
         if (vs.step.type === "todo") {
           return <TodoBlock key={i} items={vs.step.items} />;
         }
         return null;
       })}
       {!isAnimating && paused && <TerminalPrompt showHint />}
+      {isComplete && (
+        <div className="flex justify-center py-2">
+          <AdvanceButton label="↺ Replay" />
+        </div>
+      )}
     </div>
   );
 }

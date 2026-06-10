@@ -11,7 +11,8 @@ interface VisibleStep {
 export function useTerminalSimulation(
   script: Step[],
   onStepComplete?: (stepIndex: number) => void,
-  pauseAtSteps?: number[]
+  pauseAtSteps?: number[],
+  onReset?: () => void
 ) {
   const [visibleSteps, setVisibleSteps] = useState<VisibleStep[]>([]);
   const [currentStepIndex, setCurrentStepIndex] = useState(-1);
@@ -74,12 +75,20 @@ export function useTerminalSimulation(
         if (!autoAdvanceRef.current || doneIdx + 1 >= script.length) return;
         if (pauseAtSteps?.includes(doneIdx)) {
           setPaused(true);
+          // the advance button renders below the content — keep it in view
+          setTimeout(scrollToBottom, 80);
         } else {
           timerRef.current = setTimeout(() => advanceToStep(doneIdx + 1), nextDelay);
         }
       };
 
-      if (step.type === "tool-use" || step.type === "todo" || step.type === "receiving-feedback" || step.type === "human-feedback") {
+      if (
+        step.type === "tool-use" ||
+        step.type === "todo" ||
+        step.type === "receiving-feedback" ||
+        step.type === "human-feedback" ||
+        step.type === "check-line"
+      ) {
         setVisibleSteps((prev) => [...prev, { step, typingProgress: 0 }]);
         setIsAnimating(false);
         setTimeout(scrollToBottom, 50);
@@ -168,6 +177,20 @@ export function useTerminalSimulation(
     }
   }, [paused, script, advanceToStep]);
 
+  const reset = useCallback(() => {
+    if (timerRef.current) {
+      clearTimeout(timerRef.current);
+      timerRef.current = null;
+    }
+    setVisibleSteps([]);
+    setCurrentStepIndex(-1);
+    currentStepRef.current = -1;
+    setIsAnimating(false);
+    setPaused(false);
+    autoAdvanceRef.current = false;
+    onReset?.();
+  }, [onReset]);
+
   const advance = useCallback(() => {
     if (isAnimating) {
       skipToEnd();
@@ -186,11 +209,15 @@ export function useTerminalSimulation(
     }
 
     const nextIndex = currentStepIndex + 1;
-    if (nextIndex >= script.length) return;
+    if (nextIndex >= script.length) {
+      // Demo finished — a click means replay
+      reset();
+      return;
+    }
 
     autoAdvanceRef.current = true;
     advanceToStep(nextIndex);
-  }, [isAnimating, paused, resume, currentStepIndex, script, skipToEnd, advanceToStep]);
+  }, [isAnimating, paused, resume, currentStepIndex, script, skipToEnd, advanceToStep, reset]);
 
   useEffect(() => {
     return () => {

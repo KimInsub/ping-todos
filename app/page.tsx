@@ -13,6 +13,13 @@ export default function Home() {
   const [currentStep, setCurrentStep] = useState(-1);
   const terminalRef = useRef<TerminalHandle>(null);
 
+  const resetDemoState = useCallback(() => {
+    setPhase("hidden");
+    setWaitingForNavClick(false);
+    setFeedbackActive(false);
+    setCurrentStep(-1);
+  }, []);
+
   const handleStepComplete = useCallback((stepIndex: number) => {
     setCurrentStep(stepIndex);
     if (stepIndex === 4) {
@@ -68,11 +75,17 @@ export default function Home() {
               onStepComplete={handleStepComplete}
               pauseAtSteps={[5, 7]}
               onPausedChange={handlePausedChange}
+              onReset={resetDemoState}
               pingingDone={feedbackActive}
             />
           </div>
         </div>
       </div>
+      <footer className="bg-black border-t border-claude-subtle/30 py-8">
+        <p className="text-center font-mono text-xs text-claude-inactive">
+          Built by Fusiform Labs · 2026
+        </p>
+      </footer>
     </>
   );
 }

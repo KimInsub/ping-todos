@@ -12,8 +12,8 @@ interface TopNavProps {
 
 export function TopNav({ phase = "hidden", onClick, departing }: TopNavProps) {
   const isBroken = phase === "broken" || phase === "reviewing" || phase === "fixing";
-  const isReviewing = phase === "reviewing";
   const isFixing = phase === "fixing";
+  const showSwarm = phase === "reviewing";
 
   const handleClick = onClick
     ? (e: React.MouseEvent) => {
@@ -83,7 +83,7 @@ export function TopNav({ phase = "hidden", onClick, departing }: TopNavProps) {
       </div>
 
       {/* Cursor swarm overlay */}
-      <CursorSwarm visible={isReviewing} departing={departing} />
+      <CursorSwarm visible={showSwarm} departing={departing} />
     </nav>
   );
 }

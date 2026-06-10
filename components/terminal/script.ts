@@ -76,5 +76,10 @@ export const SCRIPT: Step[] = [
   {
     type: "assistant-text",
     text: "Fixed — proper spacing with gap-8 and px-4 padding.",
+    holdAfter: 800,
+  },
+  {
+    type: "check-line",
+    text: "Done — all feedback addressed",
   },
 ];

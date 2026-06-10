@@ -41,6 +41,11 @@ export interface HumanFeedbackStep {
   items: string[];
 }
 
+export interface CheckLineStep {
+  type: "check-line";
+  text: string;
+}
+
 export type Step = (
   | UserInputStep
   | AssistantTextStep
@@ -49,6 +54,7 @@ export type Step = (
   | ReceivingFeedbackStep
   | PingingHumansStep
   | HumanFeedbackStep
+  | CheckLineStep
 ) & {
   /** ms to hold after this step before auto-advancing (default 400) */
   holdAfter?: number;
