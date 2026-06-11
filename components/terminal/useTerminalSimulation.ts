@@ -210,14 +210,14 @@ export function useTerminalSimulation(
 
     const nextIndex = currentStepIndex + 1;
     if (nextIndex >= script.length) {
-      // Demo finished — a click means replay
-      reset();
+      // Demo finished — replay only fires from the Replay button, not from
+      // clicking the terminal body. Do nothing here.
       return;
     }
 
     autoAdvanceRef.current = true;
     advanceToStep(nextIndex);
-  }, [isAnimating, paused, resume, currentStepIndex, script, skipToEnd, advanceToStep, reset]);
+  }, [isAnimating, paused, resume, currentStepIndex, script, skipToEnd, advanceToStep]);
 
   useEffect(() => {
     return () => {
@@ -232,6 +232,7 @@ export function useTerminalSimulation(
     paused,
     advance,
     resume,
+    reset,
     containerRef,
   };
 }

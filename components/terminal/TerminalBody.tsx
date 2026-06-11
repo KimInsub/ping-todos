@@ -25,6 +25,7 @@ export function TerminalBody({
   showHint,
   paused,
   pingingDone,
+  onReplay,
   containerRef,
 }: {
   visibleSteps: VisibleStep[];
@@ -33,6 +34,7 @@ export function TerminalBody({
   showHint: boolean;
   paused: boolean;
   pingingDone?: boolean;
+  onReplay: () => void;
   containerRef: RefObject<HTMLDivElement | null>;
 }) {
   if (showHint) {
@@ -113,20 +115,18 @@ export function TerminalBody({
       {isComplete && (
         <div className="flex flex-col items-center gap-3 py-3">
           <a
-            href="#get-started"
-            onClick={(e) => {
-              e.stopPropagation();
-              e.preventDefault();
-              document
-                .getElementById("get-started")
-                ?.scrollIntoView({ behavior: "smooth", block: "center" });
-            }}
+            href="https://pinghumans.com/sign-in"
+            onClick={(e) => e.stopPropagation()}
             className="font-mono text-sm font-semibold px-6 py-2.5 rounded-md bg-claude-green text-black transition-all hover:brightness-110"
           >
             Get started →
           </a>
           <button
             type="button"
+            onClick={(e) => {
+              e.stopPropagation();
+              onReplay();
+            }}
             className="font-mono text-xs text-claude-inactive transition-colors hover:text-claude-text"
           >
             ↺ Replay

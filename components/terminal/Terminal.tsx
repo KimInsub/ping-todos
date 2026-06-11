@@ -30,6 +30,7 @@ export const Terminal = forwardRef<TerminalHandle, TerminalProps>(
       paused,
       advance,
       resume,
+      reset,
       containerRef,
     } = useTerminalSimulation(script, onStepComplete, pauseAtSteps, onReset);
 
@@ -69,6 +70,7 @@ export const Terminal = forwardRef<TerminalHandle, TerminalProps>(
           showHint={showHint}
           paused={paused}
           pingingDone={pingingDone}
+          onReplay={reset}
           containerRef={containerRef}
         />
         <TerminalStatusBar />

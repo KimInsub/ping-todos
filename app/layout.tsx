@@ -27,6 +27,12 @@ export default function RootLayout({
     <html lang="en" className={`${jetbrainsMono.variable} ${silkscreen.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col font-mono">
         {children}
+        {/* PingHumans QA toolbar — preview/dev only, gated so it never loads in
+            real production. Enable for a preview build with
+            NEXT_PUBLIC_ENABLE_QA_TOOLBAR=1. */}
+        {process.env.NEXT_PUBLIC_ENABLE_QA_TOOLBAR === "1" && (
+          <script src="https://pinghumans.com/qa-toolbar.js" async />
+        )}
       </body>
     </html>
   );
